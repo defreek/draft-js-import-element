@@ -100,6 +100,9 @@ const ELEM_TO_ENTITY = {
   },
   img(tagName: string, element: DOMElement): ?string {
     let data = getEntityData(tagName, element);
+    if (element.nextSibling.tagName === 'FIGCAPTION') {
+      data.caption = element.nextSibling.innerHTML;
+    }
     // Don't add `<img>` elements with no src.
     if (data.src != null) {
       return Entity.create(ENTITY_TYPE.IMAGE, 'MUTABLE', data);
@@ -127,7 +130,7 @@ const SPECIAL_ELEMENTS = {
   meta: 1, ol: 1, optgroup: 1, option: 1, param: 1, script: 1, select: 1,
   source: 1, style: 1, table: 1, tbody: 1, textarea: 1, tfoot: 1, thead: 1,
   title: 1, tr: 1, track: 1, ul: 1, wbr: 1, basefont: 1, dialog: 1, dir: 1,
-  isindex: 1,
+  isindex: 1, figcaption: 1
 };
 
 // These elements are special because they cannot contain childNodes.
